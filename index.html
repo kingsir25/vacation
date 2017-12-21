@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8" />
+	<title>【JAKE工作室】</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" /> 
+    <meta name="copyright" content="Copyright 皆可人网 版权所有" />
+    
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <style>
+      .test{
+        height: 300px;
+        background: green;
+      }
+    </style>
+</head>
+
+<body>
+
+<form>
+   <div class = "form-group has-success col-lg-3 col-md-4 col-sm-6 col-xs-12">
+   <label class ="control-label" for="">ID:</label>
+   <input type="text" class="form-control"> 必须输入</input>
+ 
+   </div>
+   <div class = "form-group has-warning col-lg-3 col-md-4 col-sm-6 col-xs-12">
+   <label class ="control-label" >Team:</label>
+   <select class = "form-control" name="" id=""> 
+     <option>MB</option>
+     <option>MC</option>
+     <option>MD</option>
+     <option>Other</option>
+   </select>
+
+   </div>
+
+   <div class = "form-group has-error col-lg-3 col-md-4 col-sm-6 col-xs-12">
+   <label class ="control-label" >Name:</label>
+   <input type="text" class="form-control"> </input>
+   </div>
+    
+   <div class = "form-group has-error col-lg-3 col-md-4 col-sm-6 col-xs-12">
+   <button class ="btn btn-default  btn-lg" >检索</button>
+   <button class ="btn btn-success btn-sm" >插入</button>
+   <button class ="btn btn-primary disabled" >删除</button>
+   <button class ="btn btn-info active" >更新</button>
+   <button class ="btn btn-warning btn-block" >提交</label>
+  </div>
+
+
+   <table class= "table table-striped table-bordered table-hover">
+    <thead>
+     <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>性别</th>
+      <th>级别</th>
+      <th>登录时间</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>jake.jian.wang</td>
+      <td>wangjian</td>
+      <td>male</td>
+      <td>AM</td>
+      <td>201000308</td>
+     </tr>
+      <tr>
+      <td>jake.jian.wang</td>
+      <td>wangjian</td>
+      <td>male</td>
+      <td>AM</td>
+      <td>201000308</td>
+     </tr>
+      <tr>
+      <td>jake.jian.wang</td>
+      <td>wangjian</td>
+      <td>male</td>
+      <td>AM</td>
+      <td>201000308</td>
+     </tr>
+      <tr>
+      <td>jake.jian.wang</td>
+      <td>wangjian</td>
+      <td>male</td>
+      <td>AM</td>
+      <td>201000308</td>
+
+     </tr>
+    </tbody>
+   </table>
+  <div class = "form-group has-error col-lg-3 col-md-4 col-sm-6 col-xs-12">
+   <button class ="btn btn-danger" data-toggle="modal" data-target ="#danger" >关闭</button>
+   <button class ="btn btn-link" >返回</button>
+   <a class ="btn btn-success btn-block" href=""> 跳转</a>
+
+   </div>
+  <div id="danger">
+    不可关闭
+  </div>
+
+</form>
+
+<ul class= "nav nav-tabs">
+ <li class = "active"><a href = ""> 首页</a></li>
+ <li><a href = "">通知</a></li>
+ <li><a href = "">作业</a></li>
+ <li><a href = "">活动</a></li>
+ <li><a href = "">资料</a></li>
+ <li><a href = "">微博</a></li>
+</ul>
+<ul class= "nav nav-pills nav-stacked">
+ <li class = "active"><a href = ""> 首页</a></li>
+ <li><a href = "">通知</a></li>
+ <li><a href = "">作业</a></li>
+ <li><a href = "">活动</a></li>
+ <li><a href = "">资料</a></li>
+ <li><a href = "">微博</a></li>
+</ul>
+ <div> 
+  <ul class= "list-group">
+   <li class = "list-group-item active"> 列表1 <span class ="badge">13</span></li>
+   <li class = "list-group-item"> 列表2 <span class ="badge">15</span></li>
+   <li class = "list-group-item"> 列表3 <span class ="badge">16</span></li>
+   <li class = "list-group-item"> 列表4 <span class ="badge">18</span></li>
+   <li class = "list-group-item"> 列表5 <span class ="badge">19</span></li>
+  </ul>
+</div>
+</body>    
+</html>

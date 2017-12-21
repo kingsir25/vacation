@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>jQuery</title>
+<script src="js/jquery-3.2.1.min.js"></script>
+<script>
+// 记得jquery文件的引入
+function copy(i)
+{
+//alert("这里是直接通过copy(72)来取到值"+i)
+$("#showid").html("这里是直接通过copy()来取到值"+i)
+}
+ 
+</script>
+
+<script language=javascript>
+function test(id){
+  alert(id);
+}
+</script>
+
+</head>
+<body>
+<a href="javascript:void(0)"  onClick='copy(56)'>啦啦啦</a>
+ 
+<table><thead></thead>
+<tbody>
+<tr>
+	<td onClick='copy(37)'>这个元素用来显示id:<span id="showid"></span></td>
+</tr>
+</tbody>
+</table>
+这个元素用来显示id:<span id="showid"></span>
+
+
+<table height="100" width=101px" border="1">
+<tr>
+<td id="1" onclick="test(1)" >1</td>
+<td id="2" onclick="test(2)" >2</td>
+<td id="3" onclick="test(3)" >3</td>
+<td id="4" onclick="test(4)" >4</td>
+<td id="5" onclick="test(5)" >5</td>
+</tr>
+</table>
+</body>
+</html>

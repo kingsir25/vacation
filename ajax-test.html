@@ -1,0 +1,115 @@
+<!DOCTYPE html> 
+<html> 
+<head>
+<meta charset="utf-8">
+<title>AJAX testing</title>
+<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+
+</head>
+<body> 
+<div style="text-align:center;">
+  <button onclick="loadXMLDoc()">call $ajax</button>
+  <button onclick="click1()">call $getJSON</button> 
+  <button onclick="postdata()">Post #ajax</button> 
+
+  <div id="myDiv">跨域测试CROS Testing</div>
+  <div >内容显示</div>
+  <table border="1">
+      <caption>Vacation</caption>
+      <thead>
+      <tr>
+      <th>id</th>
+      <th>姓名</th>
+      </tr>
+      <thead>
+      <tbody id="test">
+
+     </tbody>
+  </table>
+
+</div> 
+
+<script type="text/javascript">
+    function click1() {
+        $.getJSON("http://localhost:8080/OraDAO-0.0.1-SNAPSHOT/db/query?sql=select%20id,%20name%20from%20resources",
+          function (data) {
+              var rs = "";
+
+              for (var i = 1; i < data.length; i++) {
+                  rs = rs + '<tr><td>' + data[i].ID + ' </td><td>' + data[i].NAME + '</td></tr>';
+              }
+              $('#test').append(rs);
+          });
+    }
+    function loadXMLDoc() {
+        data_param = { "timeType": "LAST_7_DAYS", "hostType": "ALL_HOSTS" }
+        $.ajax({
+            url: "http://10.1.251.111:8080/db/say?id=1",
+            type: "GET",
+            //data:JSON.stringify(data_param),
+            headers: {
+                //    "X-Auth-Token":"open-sesame",
+                "Content-Type": "application/json"
+            },
+            contentType: 'text/html; charset=UTF-8',
+            dataType: "json",
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
+            success: function (data) {
+                alert("JSON Data ID: " + data.id);
+                //alert("success!!data="+data); // Object
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("status=" + XMLHttpRequest.status);
+                alert("readyState=" + XMLHttpRequest.readyState);
+                alert("textStatus=" + textStatus);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+            }
+        });
+    }
+
+    function postdata() {
+        var data_param = [{ "name": "jake.jian.wang", "team": "mf9", "workdate": 20171202, "type": "V", "workhours": 8 },
+                       { "name": "jake.jian.wang", "team": "mf9", "workdate": 20171207, "type": "S", "workhours": 8 },
+                       { "name": "jake.jian.wang", "team": "mf9", "workdate": 20171215, "type": "F", "workhours": 4 },
+                       { "name": "jake.jian.wang", "team": "mf9", "workdate": 20171222, "type": "V", "workhours": 8 },
+                       { "name": "jake.jian.wang", "team": "mf9", "workdate": 20171226, "type": "O", "workhours": 7 }
+                      ];
+        console.log(JSON.stringify(data_param));
+        $.ajax({
+            //url: "http://localhost:9090/workschedule/adds",
+            url: "http://localhost:8080/OraDAO-0.0.1-SNAPSHOT/workschedule/adds",
+            type: "POST",
+            data: JSON.stringify(data_param),
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Credentials": true
+            },
+            contentType: 'application/json; charset=UTF-8',
+            dataType: "json",
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
+            success: function (data) {
+                alert("JSON Data ID: " + data.id);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                result = -1
+                console.log("status=" + XMLHttpRequest.status);
+                console.log("readyState=" + XMLHttpRequest.readyState);
+                console.log("textStatus=" + textStatus);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                result = 1
+            }
+        });
+    }
+</script> 
+
+</body> 
+</html>

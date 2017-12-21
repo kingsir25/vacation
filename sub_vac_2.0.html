@@ -1,0 +1,292 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8" />
+	<title>【JAKE出品】</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" /> 
+    <meta name="copyright" content="Copyright jake.jian.wang 版权所有" />
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="src/getCalendar.js"></script>
+    <script type="text/javascript" src="src/getvacation.js"></script>
+    <script type="text/javascript" src="src/putvacation.js"></script>
+<script>
+
+    var today = new Date();
+    currentYYYY = today.getFullYear();
+    currentMM = today.getMonth() + 1;
+
+    var vacationData = new Array();
+    var calendar = new Array();
+    /*
+    Submit
+    */
+    function subvac(){
+      setCookie('myeid', document.getElementById('myeid').value, 365);
+      //把42天信息一起一次更新到DB
+      //window.dbvacation.putVacation(document.getElementById('myeid').value, vacationData);
+    }
+    /*
+    设定Cookie
+    */
+    function setCookie(cname, cvalue, exdays) {
+        if (cname != "" && cvalue != "" && exdays != "") {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toGMTString();
+            document.cookie = cname + "=" + cvalue + "; " + expires;
+        }
+    }
+    /*
+    获取Cookie
+    */
+    function getCookie(cname) {
+        var name = "";
+        if (cname != "") {
+            name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i].trim();
+                if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+ /**
+    *刷新table
+    */
+    function putMonthDate(yyyy, mm) {
+
+        console.log(yyyy + "-" + mm);
+
+        if (!yyyy || !mm) {
+            yyyy = currentYYYY;
+            mm = currentMM;
+        }
+
+        $("#clickdate").val(yyyy + "-" + mm);
+
+        vacationData = [];
+
+        var cont = document.getElementById('ctid');
+        var html = '';
+
+        calendar = window.datepicker.getCalendar(yyyy, mm);
+        console.log("Cookie=" + getCookie("myeid"));
+        vacationData = window.myvacation.getVacation(getCookie("myeid"), calendar);
+        //console.log("vacationData=");
+        //console.log(vacationData);
+        for (var i = 0; i < 42; i++) {
+            var date = calendar[i].toString().substr(6, 2);
+            if (i % 7 == 0) { html += '<tr>'; }
+            html += '<td onclick=\"setTdFont(' + i + ')\" id=\"' + i + '\">' + date + '</td>';
+            if (i % 7 == 6) { html += '</tr>'; }
+        }
+        cont.innerHTML = html;
+
+        // console.log(html);
+    }
+    /**
+    前一个月
+    */
+    function preMonth() {
+        console.log($("#clickdate").val());
+        currentYYYY = parseInt($("#clickdate").val().substr(0, 4));
+        currentMM = (parseInt($("#clickdate").val().substr(5, 2)) - 1);
+        if (currentMM == 0) { currentMM = 12; currentYYYY = currentYYYY - 1 }
+        console.log(currentYYYY + "-" + currentMM);
+        putMonthDate(currentYYYY, currentMM);
+
+    }
+    /**
+    下一个月
+    */
+    function nextMonth() {
+        console.log($("#clickdate").val());
+        currentYYYY = parseInt($("#clickdate").val().substr(0, 4));
+        currentMM = parseInt($("#clickdate").val().substr(5, 2)) + 1;
+        if (currentMM == 13) { currentMM = 1; currentYYYY = currentYYYY + 1 }
+        console.log(currentYYYY + "-" + currentMM);
+        putMonthDate(currentYYYY, currentMM);
+
+    }
+</script>
+
+
+<script>
+  /**
+  *切换光标
+  */
+function changecur(v) {
+  console.log(v);
+  var obj = window.document.getElementById("ctid");
+  switch (v)
+  {
+    case "V" :obj.setAttribute("class", "v-cur");break;
+    case "F" :obj.setAttribute("class", "f-cur");break;
+    case "S" :obj.setAttribute("class", "s-cur");break;
+    case "O" :obj.setAttribute("class", "o-cur");break;
+    default:break;
+  }
+}
+</script>
+      <style>
+      .v-cur{
+        cursor:url('cur/V.cur'),auto;
+      }
+      .f-cur{
+        cursor:url('cur/F.cur'),auto;
+      }
+      .s-cur{
+        cursor:url('cur/S.cur'),auto;
+      }
+      .o-cur{
+        cursor:url('cur/O.cur'),auto;
+      }
+
+  th
+  {
+  text-align:center;font-weight:bold;
+  }
+
+  td
+  {
+  text-align:center;
+  }
+    </style>
+</head>
+
+<body>
+
+<div class = "form-group has-warning col-lg-3 col-md-4 col-sm-6 col-xs-12">
+
+  <form class ="form-horizontal"> 
+
+
+  <div class="form-group">   
+    <label class ="col-sm-4 control-label" >请假类型:</label>
+    <div class="col-sm-8">
+      <select class = "form-control" name="month-select" id="msel-id" onchange="changecur(this.options[this.options.selectedIndex].value)"> 
+       <option value="V">Vacation</option>
+       <option value="F">Flexleave</option>
+       <option value="S">Sickleave</option>
+       <option value="O">Other</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+      <label  class ="col-sm-4 control-label" for="">小时:</label>
+      <div class="col-sm-8">
+         <input  class="form-control" type="text" id="input-hours" value="8"></input>
+      </div>
+  </div>
+  
+    <div class="row">
+      <div class="input-group ">
+        <span class="input-group-addon"><a href="#" onclick="preMonth();return false;"><<上个月</a></span>
+        <input  class="form-control" type="text" id="clickdate" readonly="readonly" style="text-align:center;font-weight:bold;"></input>
+        <span class="input-group-addon"><a href="#" onclick="nextMonth();return false;">下个月>></a></span>
+      </div>
+    </div>
+  
+  <div class="form-group">
+   <table   class= "table table-striped table-lg table-bordered table-hover">
+    <thead>
+     <tr>
+      <th>日</th>
+      <th>一</th>  
+      <th>二</th>
+      <th>三</th>
+      <th>四</th>
+      <th>五</th>
+      <th>六</th>
+     </tr>
+    </thead>  
+    <tbody name ="calandar-table" id="ctid" class ="v-cur">
+
+      <script >putMonthDate("","");</script>
+
+    </tbody>
+   </table>
+  </div>
+
+    <div class="input-group">
+      <input type="text" class="form-control" id="myeid" placeholder="EID">
+
+        <script >document.getElementById('myeid').value = getCookie("myeid");</script>
+
+      <span class="input-group-addon">@accenture.com</span>
+      <span class="input-group-btn">
+        <button class="btn btn-warning" type="button" onclick="subvac();">提交</button>
+      </span>
+    </div>
+
+
+</form> 
+
+</div>
+
+
+
+
+<script type="text/javascript">
+/**
+点击table单元格的时候，修改假期信息显示
+*/
+  function setTdFont(id){
+//取得单元格
+    var tdobj = window.document.getElementById(id);
+//取得休假类型选择项和填写的小时数
+    var vtype =$('#msel-id').val();
+    var hours = window.document.getElementById("input-hours").value;
+    
+    var vacinf =  vtype;
+    if (hours <8 ) {vacinf = vacinf + hours;}
+
+var vacitem = "{\"name\":\""+ getCookie("myeid") +"\",\"team\":\"BOD\", \"workdate\":" + window.calendar[id] + ",\"type\":\""  + vtype + "\",\"workhours\":" + hours + "}";
+//保存休假信息到vacation相应地址
+     if (window.vacationData[id] == null || window.vacationData[id] == "") {
+         window.vacationData[id]=[];
+         window.vacationData[id].push(vacitem);
+         //ajax更新到DB
+     }else{
+
+      var find_flag = 0;
+      
+      var vac_arr = [];
+       for(var n=0;n< window.vacationData[id].length;n++){
+         var jsonstr  = window.vacationData[id][n]
+         console.log(window.vacationData[id][n]);
+         var jsonobj   = JSON.parse(jsonstr);
+//如果信息一致则消除信息 否则更新信息 ??Bug 数组对象比较 更复杂，增加team name信息
+        //if (jsonobj.type == vtype && jsonobj.hours == hours){
+        if (jsonobj.type == vtype){
+          //休假类型一样的数据清为空
+          //window.vacationData[id][n]= null;
+           var reg=new RegExp("("+ vtype +")(\\d*)","gmi");//正则式形式全局多行忽略大小写 替换掉休假信息
+           vacinf=　vacinf.replace(reg,"");
+           find_flag = 1;
+        }else{
+          vac_arr.push(jsonstr);//保存不重复的假期信息到临时数组
+          
+        }
+       }
+       if (find_flag == 0){
+         //如果没有发生过同类型假期，把假期信息更新到数组里
+        vac_arr.push(vacitem);
+        //vacinf = vacinf + vtype + hours;
+       }
+       window.vacationData[id]=vac_arr;
+    }
+
+    var html= '<font size=\"3\">' + window.calendar[id].toString().substr(6,2) +'</font> <font size=\"5\" color=\"red\">' + vacinf +'</font>'
+
+    tdobj.innerHTML=html;
+  }
+</script>
+
+</body>    
+</html>

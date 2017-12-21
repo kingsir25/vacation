@@ -1,0 +1,7 @@
+{
+"id":"jake.jian.wang",
+"Month":"201709",
+"Vacation":[
+            {"date":1,"type":"V"},{"date":4,"type":"S"},{"date":15,"type":"F"},{"date":22,"type":"V"},{"date":26,"type":"O"}
+           ]
+}
