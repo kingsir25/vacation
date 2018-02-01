@@ -11,6 +11,7 @@
     <script type="text/javascript" src="src/getCalendar.js"></script>
     <script type="text/javascript" src="src/getvacation.js"></script>
     <script type="text/javascript" src="src/update1day.js"></script>
+    <script type="text/javascript" src="src/restful-db-api.js"></script>
 <script>
 
     var today = new Date();
@@ -251,11 +252,16 @@ var vacitem = "{\"name\":\""+ getCookie("myeid") +"\",\"team\":\"BOD\", \"workda
      if (window.vacationData[id] == null || window.vacationData[id] == "") {
          window.vacationData[id]=vacitem;
         //ajax更新到DB
-         window.updateonedayvacation.updateVacByDay(vacitem);
+         //window.updateonedayvacation.updateVacByDay(vacitem);
+         // insert sql
+         sql = "insert into workschedule(name,team,workdate,workhours,type) values(\'" + getCookie("myeid") + "\',\'BOD\',\'" + window.calendar[id] + "\',"+ hours +",\'"+ vtype +"\')"
+         window.RESTfulAPI.post_insert(sql);
      }else{
        window.vacationData[id]="";
        vacinf = "";
        //ajax删除DB数据 delete sql
+       sql = "delete from workschedule where name=\'" + getCookie("myeid") + "\' and workdate = \'" + window.calendar[id] + "\' and type <>\'w\'"
+       window.RESTfulAPI.post_insert(sql);
     }
 
     var html= '<font size=\"3\">' + window.calendar[id].toString().substr(6,2) +'</font> <font size=\"5\" color=\"red\">' + vacinf +'</font>'
