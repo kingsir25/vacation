@@ -10,11 +10,14 @@ var RESTfulAPI ={}
 console.log(data_param);
 //data_param:休假信息text/plain
 //data_param = "delete from workschedule where name = \'jake.jian.wang\' and workdate = \'20171221'" ;
-//delete from workschedule where workhours = 0
-//AJAX操作step1： 删除当日休假信息
+
+//AJAX操作：
         $.ajax({
-            //url: "http://10.1.251.111:8080/ora/db/query",
-            url: "http://localhost:8080/OraDAO-0.0.1-SNAPSHOT/db/insert",
+            url: "http://10.1.251.111:8080/ora/db/insert",
+
+            //Localhost test 用
+            //url: "http://localhost:8080/OraDAO-0.0.1-SNAPSHOT/db/insert",
+
             type: "POST",
             data:data_param,
             headers: {

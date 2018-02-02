@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8" />
+	<title>VacationPlan【JAKE出品】</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" /> 
+    <meta name="copyright" content="Copyright jake.jian.wang 版权所有" />
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="src/getVacationPlan.js"></script>
+<script>
+
+    var today = new Date();
+    currentYYYY = today.getFullYear();
+    currentMM = today.getMonth() + 1;
+
+ /**
+    *闰年判断函数：ture
+    */
+function isLeapYear(iYear) {//是否是闰年
+ if (iYear % 4 == 0 && iYear % 100 != 0) {
+  return true;
+ } else {
+  if (iYear % 400 == 0) {
+   return true;
+  } else {
+   return false;
+  }
+ }
+}
+ /**
+    *刷新table
+    */
+    function putMonthDate(yyyy, mm) {
+        console.log(yyyy + "-" + mm);
+    
+        vacationPlan = [];
+
+         if (!yyyy || !mm) {
+            yyyy = currentYYYY;
+            mm = currentMM;
+        }       
+        $("#clickdate").val(yyyy + "-" + mm);
+
+        vacationPlan =  [{"D21":" ","D20":" ","D01":"V8","D23":" ","D22":" ","D03":"F8","D25":"V8","D02":"F8","D24":" ","D05":"V8","D27":" ","D04":"F8","D26":" ","D07":" ","D29":" ","D06":" ","D28":" ","D09":"F8","D08":"V8","A1":"jake.jian.wang","D30":" ","D10":"F8","D31":" ","D12":"V8","D11":"F8","D14":" ","D13":" ","D16":"V2","D15":" ","D18":" ","D17":" ","D19":" "},{"D21":"F8","D20":"F8","D01":"F8","D23":" ","D22":"F8","D03":" ","D25":" ","D02":"F8","D24":" ","D05":" ","D27":" ","D04":" ","D26":" ","D07":" ","D29":" ","D06":" ","D28":" ","D09":" ","D08":"V3.5","A1":"jake.jian.wang","D30":" ","D10":" ","D31":" ","D12":" ","D11":" ","D14":"V4.5","D13":" ","D16":" ","D15":" ","D18":" ","D17":" ","D19":"F8"},{"D21":" ","D20":" ","D01":" ","D23":" ","D22":" ","D03":" ","D25":" ","D02":" ","D24":" ","D05":" ","D27":" ","D04":" ","D26":" ","D07":"V2","D29":" ","D06":" ","D28":" ","D09":" ","D08":" ","A1":"jake.jian.wang","D30":" ","D10":" ","D31":" ","D12":" ","D11":" ","D14":" ","D13":" ","D16":" ","D15":" ","D18":" ","D17":" ","D19":" "},{"D21":" ","D20":" ","D01":" ","D23":" ","D22":" ","D03":" ","D25":" ","D02":" ","D24":" ","D05":" ","D27":" ","D04":" ","D26":" ","D07":" ","D29":" ","D06":" ","D28":" ","D09":" ","D08":" ","A1":"jake.jian.wang","D30":" ","D10":" ","D31":" ","D12":" ","D11":" ","D14":" ","D13":" ","D16":" ","D15":" ","D18":" ","D17":" ","D19":" "},{"D21":" ","D20":" ","D01":" ","D23":" ","D22":" ","D03":" ","D25":" ","D02":" ","D24":" ","D05":" ","D27":" ","D04":" ","D26":" ","D07":" ","D29":" ","D06":" ","D28":" ","D09":" ","D08":" ","A1":"jake.jian.wang","D30":" ","D10":" ","D31":" ","D12":" ","D11":" ","D14":" ","D13":" ","D16":" ","D15":" ","D18":" ","D17":" ","D19":" "}]
+
+        var cont = document.getElementById('tid');
+        var html = '';
+        
+        
+        strYM =""+yyyy+mm;
+        if(mm<10){strYM =""+yyyy+"0"+mm;}
+
+        vacationPlan = window.vacationplan.getVacationPlan(strYM);
+        console.log("vacationPlan=");
+        console.log(vacationPlan);
+        
+        lastday =31;
+        if (mm ==2){
+            if(isLeapYear(yyyy)==true){lastday=29}else{lastday=28;}
+        }else if(mm == 4 || mm == 6 || mm == 9 || mm == 11){
+            lastday =30;
+        }
+        console.log(mm);
+        console.log(lastday);
+        //表头编辑
+        html= '<thead><tr><th>EID</th>'
+        for (var i = 1; i < lastday + 1; i++) {html= html + '<th>' + mm + '/' + i +'</th>'; }
+        html= html + '</tr> </thead>'
+        //表内容编辑
+        html= html + '<tbody>'
+
+        $.each(vacationPlan,function (i, item) {
+        //for (var i = 0; i < vacationPlan.size(); i++) {
+          html= html + '<tr>';
+          html= html + '<td>' + item.A1 +'</td>';
+          html= html + '<td>' + item.D01 +'</td>';
+          html= html + '<td>' + item.D02 +'</td>';
+          html= html + '<td>' + item.D03 +'</td>';
+          html= html + '<td>' + item.D04 +'</td>';
+          html= html + '<td>' + item.D05 +'</td>';
+          html= html + '<td>' + item.D06 +'</td>';
+          html= html + '<td>' + item.D07 +'</td>';
+          html= html + '<td>' + item.D08 +'</td>';
+          html= html + '<td>' + item.D09 +'</td>';
+          html= html + '<td>' + item.D10 +'</td>';
+          html= html + '<td>' + item.D11 +'</td>';
+          html= html + '<td>' + item.D12 +'</td>';
+          html= html + '<td>' + item.D13 +'</td>';
+          html= html + '<td>' + item.D14 +'</td>';
+          html= html + '<td>' + item.D15 +'</td>';
+          html= html + '<td>' + item.D16 +'</td>';
+          html= html + '<td>' + item.D17 +'</td>';
+          html= html + '<td>' + item.D18 +'</td>';
+          html= html + '<td>' + item.D19 +'</td>';
+          html= html + '<td>' + item.D20 +'</td>';
+          html= html + '<td>' + item.D21 +'</td>';
+          html= html + '<td>' + item.D22 +'</td>';
+          html= html + '<td>' + item.D23 +'</td>';
+          html= html + '<td>' + item.D24 +'</td>';
+          html= html + '<td>' + item.D25 +'</td>';
+          html= html + '<td>' + item.D26 +'</td>';
+          html= html + '<td>' + item.D27 +'</td>';
+          html= html + '<td>' + item.D28 +'</td>';
+          if(lastday > 28){
+             html= html + '<td>' + item.D29 +'</td>';
+             if(lastday > 29){
+                html= html + '<td>' + item.D30 +'</td>';
+                if(lastday > 30){
+                  html= html + '<td>' + item.D31 +'</td>';
+                }
+             }
+          }
+          html= html + '</tr>'
+        });
+        html= html + '</tbody>';
+        cont.innerHTML = html;
+    }
+    /**
+    前一个月
+    */
+    function preMonth() {
+        console.log($("#clickdate").val());
+        currentYYYY = parseInt($("#clickdate").val().substr(0, 4));
+        currentMM = (parseInt($("#clickdate").val().substr(5, 2)) - 1);
+        if (currentMM == 0) { currentMM = 12; currentYYYY = currentYYYY - 1 }
+        console.log(currentYYYY + "-" + currentMM);
+        putMonthDate(currentYYYY, currentMM);
+
+    }
+    /**
+    下一个月
+    */
+    function nextMonth() {
+        console.log($("#clickdate").val());
+        currentYYYY = parseInt($("#clickdate").val().substr(0, 4));
+        currentMM = parseInt($("#clickdate").val().substr(5, 2)) + 1;
+        if (currentMM == 13) { currentMM = 1; currentYYYY = currentYYYY + 1 }
+        console.log(currentYYYY + "-" + currentMM);
+        putMonthDate(currentYYYY, currentMM);
+
+    }
+</script>
+
+<style>
+  th
+  {
+  text-align:center;font-weight:bold;
+  }
+
+  td
+  {
+  text-align:center;
+  }
+    </style>
+</head>
+
+<body>
+
+<div class = "form-group has-warning col-xs-12">
+
+  <form class ="form-horizontal"> 
+
+<!--
+  <div class="form-group">   
+    <label class ="col-sm-4 control-label" >月份:</label>
+    <div class="col-sm-8">
+      <select class = "form-control" name="month-select" id="msel-id" onchange="changeplan(this.options[this.options.selectedIndex].value)"> 
+       <option value="V">Vacation</option>
+       <option value="F">Flexleave</option>
+       <option value="S">Sickleave</option>
+       <option value="O">Other</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+      <label  class ="col-sm-4 control-label" for="">小时:</label>
+      <div class="col-sm-8">
+         <input  class="form-control" type="number" id="input-hours" value="8" min="0.5" max="8"></input>
+      </div>
+  </div>
+ --> 
+    <div class="row">
+      <div class="input-group ">
+        <span class="input-group-addon"><a href="#" onclick="preMonth();return false;"><<上个月</a></span>
+        <input  class="form-control" type="text" id="clickdate" readonly="readonly" style="text-align:center;font-weight:bold;"></input>
+        <span class="input-group-addon"><a href="#" onclick="nextMonth();return false;">下个月>></a></span>
+      </div>
+    </div>
+  
+  <div class="form-group">
+   <table name ="V-table" id="tid"  class= "table table-striped table-lg table-bordered table-hover">
+      <script >putMonthDate("","");</script>
+   </table>
+  </div>
+
+    <div class="input-group">
+    <div class="col-md-8">
+      <select class = "form-control" name="month-select" id="msel-id" onchange="changeplan(this.options[this.options.selectedIndex].value)"> 
+       <option value="201801">1月</option>
+       <option value="201802">2月</option>
+       <option value="201803">3月</option>
+       <option value="201804">4月</option>
+       <option value="201805">5月</option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <span class="input-group-btn">
+        <button class="btn btn-warning" type="button" onclick="subvac();">检索</button>
+      </span>
+ 
+    </div>
+          
+    </div>
+
+<label class ="col-xs-12 control-label" >※V:Vacation　F:FlexLeave S: Sick leave O:Other(婚丧产乳)</label>
+</form> 
+
+</div>
+
+</body>    
+</html>

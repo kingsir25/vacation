@@ -8,15 +8,17 @@ function () {
 
         var ret = [];
 
-        var obj = { "id": id, "bigindate": calendar[0], "Vacation": [
-               { "workdate": 20171001, "type": "V", "hours": 8 }, { "workdate": 20171007, "type": "S", "hours": 8 },
-               { "workdate": 20171015, "type": "F", "hours": 4 }, { "workdate": 20171022, "type": "V", "hours": 8 },
-               { "workdate": 20171026, "type": "O", "hours": 7 }
-               ]
-        };
+        //var obj = { "id": id, "bigindate": calendar[0], "Vacation": [
+        //       { "workdate": 20171001, "type": "V", "hours": 8 }, { "workdate": 20171007, "type": "S", "hours": 8 },
+        //       { "workdate": 20171015, "type": "F", "hours": 4 }, { "workdate": 20171022, "type": "V", "hours": 8 },
+        //       { "workdate": 20171026, "type": "O", "hours": 7 }
+        //       ]
+        // };
 
-        sql = "select workdate, type , hours from workschedule where id = \'" + obj.id + "\' and workdate >= " + obj.bigindate + " orderby workdate desc"
+        //sql = "select workdate, type , hours from workschedule where id = \'" + obj.id + "\' and workdate >= " + obj.bigindate + " orderby workdate desc"
         //url ="http://10.1.251.111:8080/ora/db/query?sql=select%20*%20from%20workschedule%20where%20workdate%20%3E%20=%2020171001%20and%20workdate%20%3C=%2020171031%20and%20name%20=%27jake.jian.wang%27%20and%20type%20%3C%3E%20%27w%27"
+
+        
         var url = "http://10.1.251.111:8080/ora/db/query?" 
                  +"sql=select%20*%20from%20workschedule%20where%20" 
                  +"workdate%20%3E%20=%20" + calendar[0] 
@@ -29,7 +31,7 @@ function () {
 , function (data) {
     var html = "";
     //obj.Vacation = data;
-    //console.log(JSON.stringify(data).toLowerCase() ); 
+    //console.log(JSON.stringify(data) ); 
     //有延迟
     //-----------------------------------------------------------
     for (var i = 0; i < 7 * 6; i++) {
@@ -46,7 +48,7 @@ function () {
                 vacRecArray.push(JSON.stringify(item).toLowerCase());
                 //编辑Vacation字符串
                 vacinf = vacinf  + item.TYPE;
-                if (item.hours < 8) { vacinf = vacinf + item.hours; }
+                if (item.WORKHOURS < 8) { vacinf = vacinf + item.WORKHOURS; }
             }
         }
         )

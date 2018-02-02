@@ -1,0 +1,204 @@
+CREATE OR REPLACE VIEW VacView AS
+--当月
+(select   distinct t.name,TO_CHAR(SYSDATE, 'yyyymm') as YYYYMM,  
+ nvl(t1.type, ' ') || nvl(t1.workhours,'')    "D01",
+ nvl(t2.type, ' ') || nvl(t2.workhours,'')    "D02",
+ nvl(t3.type, ' ') || nvl(t3.workhours,'')    "D03",
+ nvl(t4.type, ' ') || nvl(t4.workhours,'')    "D04",
+ nvl(t5.type, ' ') || nvl(t5.workhours,'')    "D05",
+ nvl(t6.type, ' ') || nvl(t6.workhours,'')    "D06",
+ nvl(t7.type, ' ') || nvl(t7.workhours,'')    "D07",
+ nvl(t8.type, ' ') || nvl(t8.workhours,'')    "D08",
+ nvl(t9.type, ' ') || nvl(t9.workhours,'')    "D09",
+ nvl(t10.type, ' ') || nvl(t10.workhours,'')  "D10",
+ nvl(t11.type, ' ') || nvl(t11.workhours,'')  "D11",
+ nvl(t12.type, ' ') || nvl(t12.workhours,'')  "D12",
+ nvl(t13.type, ' ') || nvl(t13.workhours,'')  "D13",
+ nvl(t14.type, ' ') || nvl(t14.workhours,'')  "D14",
+ nvl(t15.type, ' ') || nvl(t15.workhours,'')  "D15",
+ nvl(t16.type, ' ') || nvl(t16.workhours,'')  "D16",
+ nvl(t17.type, ' ') || nvl(t17.workhours,'')  "D17",
+ nvl(t18.type, ' ') || nvl(t18.workhours,'')  "D18",
+ nvl(t19.type, ' ') || nvl(t19.workhours,'')  "D19",
+ nvl(t20.type, ' ') || nvl(t20.workhours,'')  "D20",
+ nvl(t21.type, ' ') || nvl(t21.workhours,'')  "D21",
+ nvl(t22.type, ' ') || nvl(t22.workhours,'')  "D22",
+ nvl(t23.type, ' ') || nvl(t23.workhours,'')  "D23",
+ nvl(t24.type, ' ') || nvl(t24.workhours,'')  "D24",
+ nvl(t25.type, ' ') || nvl(t25.workhours,'')  "D25",
+ nvl(t26.type, ' ') || nvl(t26.workhours,'')  "D26",
+ nvl(t27.type, ' ') || nvl(t27.workhours,'')  "D27",
+ nvl(t28.type, ' ') || nvl(t28.workhours,'')  "D28",
+ nvl(t29.type, ' ') || nvl(t29.workhours,'')  "D29",
+ nvl(t30.type, ' ') || nvl(t30.workhours,'')  "D30",
+ nvl(t31.type, ' ') || nvl(t31.workhours,'')  "D31"
+ from workschedule t 
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '01') t1  on t.name =t1.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '02') t2  on t.name =t2.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '03') t3  on t.name =t3.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '04') t4  on t.name =t4.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '05') t5  on t.name =t5.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '06') t6  on t.name =t6.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '07') t7  on t.name =t7.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '08') t8  on t.name =t8.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '09') t9  on t.name =t9.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '10') t10  on t.name =t10.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '11') t11  on t.name =t11.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '12') t12  on t.name =t12.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '13') t13  on t.name =t13.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '14') t14  on t.name =t14.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '15') t15  on t.name =t15.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '16') t16  on t.name =t16.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '17') t17  on t.name =t17.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '18') t18  on t.name =t18.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '19') t19  on t.name =t19.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '20') t20  on t.name =t20.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '21') t21  on t.name =t21.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '22') t22  on t.name =t22.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '23') t23  on t.name =t23.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '24') t24  on t.name =t24.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '25') t25  on t.name =t25.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '26') t26  on t.name =t26.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '27') t27  on t.name =t27.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '28') t28  on t.name =t28.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '29') t29  on t.name =t29.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '30') t30  on t.name =t30.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(SYSDATE, 'yyyymm')|| '31') t31  on t.name =t31.name
+ --where t.name = 'jake.jian.wang'
+ )
+ UNION 
+ --last month data
+ (select   distinct LastM.name, TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm') as lastYM,  
+ nvl(LastM1.type, ' ')  || nvl(LastM1.workhours,'')   "D01",
+ nvl(LastM2.type, ' ')  || nvl(LastM2.workhours,'')   "D02",
+ nvl(LastM3.type, ' ')  || nvl(LastM3.workhours,'')   "D03",
+ nvl(LastM4.type, ' ')  || nvl(LastM4.workhours,'')   "D04",
+ nvl(LastM5.type, ' ')  || nvl(LastM5.workhours,'')   "D05",
+ nvl(LastM6.type, ' ')  || nvl(LastM6.workhours,'')   "D06",
+ nvl(LastM7.type, ' ')  || nvl(LastM7.workhours,'')   "D07",
+ nvl(LastM8.type, ' ')  || nvl(LastM8.workhours,'')   "D08",
+ nvl(LastM9.type, ' ')  || nvl(LastM9.workhours,'')   "D09",
+ nvl(LastM10.type, ' ') || nvl(LastM10.workhours,'')  "D10",
+ nvl(LastM11.type, ' ') || nvl(LastM11.workhours,'')  "D11",
+ nvl(LastM12.type, ' ') || nvl(LastM12.workhours,'')  "D12",
+ nvl(LastM13.type, ' ') || nvl(LastM13.workhours,'')  "D13",
+ nvl(LastM14.type, ' ') || nvl(LastM14.workhours,'')  "D14",
+ nvl(LastM15.type, ' ') || nvl(LastM15.workhours,'')  "D15",
+ nvl(LastM16.type, ' ') || nvl(LastM16.workhours,'')  "D16",
+ nvl(LastM17.type, ' ') || nvl(LastM17.workhours,'')  "D17",
+ nvl(LastM18.type, ' ') || nvl(LastM18.workhours,'')  "D18",
+ nvl(LastM19.type, ' ') || nvl(LastM19.workhours,'')  "D19",
+ nvl(LastM20.type, ' ') || nvl(LastM20.workhours,'')  "D20",
+ nvl(LastM21.type, ' ') || nvl(LastM21.workhours,'')  "D21",
+ nvl(LastM22.type, ' ') || nvl(LastM22.workhours,'')  "D22",
+ nvl(LastM23.type, ' ') || nvl(LastM23.workhours,'')  "D23",
+ nvl(LastM24.type, ' ') || nvl(LastM24.workhours,'')  "D24",
+ nvl(LastM25.type, ' ') || nvl(LastM25.workhours,'')  "D25",
+ nvl(LastM26.type, ' ') || nvl(LastM26.workhours,'')  "D26",
+ nvl(LastM27.type, ' ') || nvl(LastM27.workhours,'')  "D27",
+ nvl(LastM28.type, ' ') || nvl(LastM28.workhours,'')  "D28",
+ nvl(LastM29.type, ' ') || nvl(LastM29.workhours,'')  "D29",
+ nvl(LastM30.type, ' ') || nvl(LastM30.workhours,'')  "D30",
+ nvl(LastM31.type, ' ') || nvl(LastM31.workhours,'')  "D31"
+ from workschedule LastM 
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '01') LastM1   on LastM.name =LastM1.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '02') LastM2   on LastM.name =LastM2.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '03') LastM3   on LastM.name =LastM3.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '04') LastM4   on LastM.name =LastM4.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '05') LastM5   on LastM.name =LastM5.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '06') LastM6   on LastM.name =LastM6.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '07') LastM7   on LastM.name =LastM7.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '08') LastM8   on LastM.name =LastM8.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '09') LastM9   on LastM.name =LastM9.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '10') LastM10  on LastM.name =LastM10.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '11') LastM11  on LastM.name =LastM11.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '12') LastM12  on LastM.name =LastM12.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '13') LastM13  on LastM.name =LastM13.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '14') LastM14  on LastM.name =LastM14.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '15') LastM15  on LastM.name =LastM15.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '16') LastM16  on LastM.name =LastM16.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '17') LastM17  on LastM.name =LastM17.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '18') LastM18  on LastM.name =LastM18.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '19') LastM19  on LastM.name =LastM19.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '20') LastM20  on LastM.name =LastM20.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '21') LastM21  on LastM.name =LastM21.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '22') LastM22  on LastM.name =LastM22.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '23') LastM23  on LastM.name =LastM23.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '24') LastM24  on LastM.name =LastM24.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '25') LastM25  on LastM.name =LastM25.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '26') LastM26  on LastM.name =LastM26.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '27') LastM27  on LastM.name =LastM27.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '28') LastM28  on LastM.name =LastM28.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '29') LastM29  on LastM.name =LastM29.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '30') LastM30  on LastM.name =LastM30.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'yyyymm')|| '31') LastM31  on LastM.name =LastM31.name
+ --where LastM.name = 'jake.jian.wang'
+)
+ UNION 
+ --next month data
+ (select   distinct NextM.name, TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm') as NextYM,   
+ nvl(NextM01.type, ' ') || nvl(NextM01.workhours,'')  "D01",
+ nvl(NextM02.type, ' ') || nvl(NextM02.workhours,'')  "D02",
+ nvl(NextM03.type, ' ') || nvl(NextM03.workhours,'')  "D03",
+ nvl(NextM04.type, ' ') || nvl(NextM04.workhours,'')  "D04",
+ nvl(NextM05.type, ' ') || nvl(NextM05.workhours,'')  "D05",
+ nvl(NextM06.type, ' ') || nvl(NextM06.workhours,'')  "D06",
+ nvl(NextM07.type, ' ') || nvl(NextM07.workhours,'')  "D07",
+ nvl(NextM08.type, ' ') || nvl(NextM08.workhours,'')  "D08",
+ nvl(NextM09.type, ' ') || nvl(NextM09.workhours,'')  "D09",
+ nvl(NextM10.type, ' ') || nvl(NextM10.workhours,'')  "D10",
+ nvl(NextM11.type, ' ') || nvl(NextM11.workhours,'')  "D11",
+ nvl(NextM12.type, ' ') || nvl(NextM12.workhours,'')  "D12",
+ nvl(NextM13.type, ' ') || nvl(NextM13.workhours,'')  "D13",
+ nvl(NextM14.type, ' ') || nvl(NextM14.workhours,'')  "D14",
+ nvl(NextM15.type, ' ') || nvl(NextM15.workhours,'')  "D15",
+ nvl(NextM16.type, ' ') || nvl(NextM16.workhours,'')  "D16",
+ nvl(NextM17.type, ' ') || nvl(NextM17.workhours,'')  "D17",
+ nvl(NextM18.type, ' ') || nvl(NextM18.workhours,'')  "D18",
+ nvl(NextM19.type, ' ') || nvl(NextM19.workhours,'')  "D19",
+ nvl(NextM20.type, ' ') || nvl(NextM20.workhours,'')  "D20",
+ nvl(NextM21.type, ' ') || nvl(NextM21.workhours,'')  "D21",
+ nvl(NextM22.type, ' ') || nvl(NextM22.workhours,'')  "D22",
+ nvl(NextM23.type, ' ') || nvl(NextM23.workhours,'')  "D23",
+ nvl(NextM24.type, ' ') || nvl(NextM24.workhours,'')  "D24",
+ nvl(NextM25.type, ' ') || nvl(NextM25.workhours,'')  "D25",
+ nvl(NextM26.type, ' ') || nvl(NextM26.workhours,'')  "D26",
+ nvl(NextM27.type, ' ') || nvl(NextM27.workhours,'')  "D27",
+ nvl(NextM28.type, ' ') || nvl(NextM28.workhours,'')  "D28",
+ nvl(NextM29.type, ' ') || nvl(NextM29.workhours,'')  "D29",
+ nvl(NextM30.type, ' ') || nvl(NextM30.workhours,'')  "D30",
+ nvl(NextM31.type, ' ') || nvl(NextM31.workhours,'')  "D31"
+ from workschedule NextM 
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '01') NextM01  on NextM.name =NextM01.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '02') NextM02  on NextM.name =NextM02.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '03') NextM03  on NextM.name =NextM03.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '04') NextM04  on NextM.name =NextM04.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '05') NextM05  on NextM.name =NextM05.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '06') NextM06  on NextM.name =NextM06.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '07') NextM07  on NextM.name =NextM07.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '08') NextM08  on NextM.name =NextM08.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '09') NextM09  on NextM.name =NextM09.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '10') NextM10  on NextM.name =NextM10.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '11') NextM11  on NextM.name =NextM11.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '12') NextM12  on NextM.name =NextM12.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '13') NextM13  on NextM.name =NextM13.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '14') NextM14  on NextM.name =NextM14.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '15') NextM15  on NextM.name =NextM15.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '16') NextM16  on NextM.name =NextM16.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '17') NextM17  on NextM.name =NextM17.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '18') NextM18  on NextM.name =NextM18.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '19') NextM19  on NextM.name =NextM19.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '20') NextM20  on NextM.name =NextM20.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '21') NextM21  on NextM.name =NextM21.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '22') NextM22  on NextM.name =NextM22.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '23') NextM23  on NextM.name =NextM23.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '24') NextM24  on NextM.name =NextM24.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '25') NextM25  on NextM.name =NextM25.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '26') NextM26  on NextM.name =NextM26.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '27') NextM27  on NextM.name =NextM27.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '28') NextM28  on NextM.name =NextM28.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '29') NextM29  on NextM.name =NextM29.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '30') NextM30  on NextM.name =NextM30.name
+ left join ( select name,type, workhours from workschedule where Workdate = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'yyyymm')|| '31') NextM31  on NextM.name =NextM31.name
+ --where NextM.name = 'jake.jian.wang'
+);
