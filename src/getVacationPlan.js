@@ -20,8 +20,9 @@ function () {
         html= html + '</tr> </thead>'
         //表内容编辑
         html= html + '<tbody>'
-
+          
         $.each(data,function (i, item) {
+          JSON.stringify(item).toUpperCase();
           html= html + '<tr>';
           html= html + '<td>' + item.NAME +'</td>';
           html= html + '<td>' + item.D01 +'</td>';

@@ -40,12 +40,13 @@ function () {
         $.each(data, function (j, item) {
             //console.log('>' + calendar[i])
             if ((calendar[i] == item.WORKDATE)
-               && (item.TYPE == 'v' || item.TYPE == 'V' ||
+               && ( item.TYPE == 'h' || item.TYPE == 'H' ||
+                    item.TYPE == 'v' || item.TYPE == 'V' ||
                     item.TYPE == 'f' || item.TYPE == 'F' ||
                     item.TYPE == 'o' || item.TYPE == 'O' ||
                     item.TYPE == 's' || item.TYPE == 'S')) {
                 //所有当天休假记录保留
-                vacRecArray.push(JSON.stringify(item).toLowerCase());
+                vacRecArray.push(JSON.stringify(item).toUpperCase());
                 //编辑Vacation字符串
                 vacinf = vacinf  + item.TYPE;
                 if (item.WORKHOURS < 8) { vacinf = vacinf + item.WORKHOURS; }
@@ -57,11 +58,24 @@ function () {
         //console.log('getvacation:' + ret[i])
 
         //HTML 作成
-        if (i % 7 == 0) { html += '<tr>'; }
-        html += '<td onclick=\"setTdFont(' + i + ')\" id=\"' + i + '\">'
-                  + calendar[i].toString().substr(6, 2) + '<font size=\"4\" color=\"blue\">'
-                  + vacinf + '</font>' + '</td>';
-        if (i % 7 == 6) { html += '</tr>'; }
+        if(vacinf!=null){vacinf = vacinf.toUpperCase()}
+        var vacinf_color  = "blue";
+        var dateinf_color = "black"
+        if (i % 7 == 0) { html += '<tr>';}
+        html += '<td ';
+        //如果不是周末也不是Holiday才有Click响应
+        if(i % 7 != 0 && i % 7 != 6 && vacinf.search(/H/i)==-1){
+           html += ' onclick=\"setTdFont(' + i + ')\"' ;
+        }
+        html += ' id=\"' + i + '\">'
+        if(i%7==0 || i%7==6){dateinf_color = "gray";}//周末字体颜色设定
+        if(vacinf.search(/H/i)!=-1){vacinf_color = "brown";}//Holiday字体颜色设定
+        html += '<font color=\"' + dateinf_color +  '\">' + calendar[i].toString().substr(6, 2) + '</font>' ;
+        html += '<font size=\"4\" color=\"' + vacinf_color +  '\">' + vacinf + '</font>' ;
+        html += '</td>';       
+        if (i % 7 == 6) { html += '</tr>';}
+
+
     }
     //取得Vacation信息后，再刷新一次table
     if (html != "") { document.getElementById('ctid').innerHTML = html; }

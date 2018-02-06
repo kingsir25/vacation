@@ -19,6 +19,21 @@
 
     var vacationData = new Array();
     var calendar = new Array();
+    var holidaylist = new Array();
+
+    $.getJSON("http://10.1.251.111:8080/ora/db/query?sql=select%20*%20from%20holiday", function (data) {holidaylist=data;});
+    /*Holiday 判断
+    在未取到Holiday信息前，判断不正确
+    */
+    function isHoliday(YYYYMMDD){
+       rt=false;
+       $.each(holidaylist,
+              function(item){
+                      if(item.YYYYMMDD == YYYYMMDD){rt=true;}
+                    }
+              );
+       return rt;
+    }
     /*
     Submit
     */
@@ -85,8 +100,17 @@
         //console.log(vacationData);
         for (var i = 0; i < 42; i++) {
             var date = calendar[i].toString().substr(6, 2);
+            if(isHoliday(calendar[i])==true){
+              date = '<font size=\"4\" color=\"brown\">' + date + 'H' + '</font>'
+            }
             if (i % 7 == 0) { html += '<tr>'; }
-            html += '<td onclick=\"setTdFont(' + i + ')\" id=\"' + i + '\">' + date + '</td>';
+            html += '<td';
+            //如果是周末就没有Click响应
+            if(i % 7 != 0 && i % 7 != 6){
+              html += ' onclick=\"setTdFont(' + i + ')\"' ;
+            }
+            html += ' id=\"' + i + '\">' + date ;
+            html += '</td>';
             if (i % 7 == 6) { html += '</tr>'; }
         }
         cont.innerHTML = html;
@@ -242,6 +266,11 @@ function changecur(v) {
 点击table单元格的时候，修改假期信息显示
 */
   function setTdFont(id){
+// 如果操作对象是Holiday
+    if(isHoliday(window.calendar[id])==true){
+         alert(window.calendar[id] + "is holiday. needn't set vacation");
+         return;
+    }
 //取得单元格
     var tdobj = window.document.getElementById(id);
 //取得休假类型选择项和填写的小时数
@@ -263,7 +292,7 @@ var vacitem = "{\"name\":\""+ getCookie("myeid") +"\",\"team\":\"BOD\", \"workda
        window.vacationData[id]="";
        vacinf = "";
        //ajax删除DB数据 delete sql
-       sql = "delete from workschedule where name=\'" + getCookie("myeid") + "\' and workdate = \'" + window.calendar[id] + "\' and type <>\'w\'"
+       sql = "delete from workschedule where name=\'" + getCookie("myeid") + "\' and workdate = \'" + window.calendar[id] + "\' and type <>\'W\'  and type <>\'H\'  and type <>\'w\'  and type <>\'h\'"
        window.RESTfulAPI.post_insert(sql);
     }
 
