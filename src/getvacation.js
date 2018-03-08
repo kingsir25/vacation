@@ -36,25 +36,44 @@ function () {
     //-----------------------------------------------------------
     for (var i = 0; i < 7 * 6; i++) {
         var vacinf = "";
-        var vacRecArray = [];
+        var vacRecArray = [0,0,0,0,0,0];
         $.each(data, function (j, item) {
             //console.log('>' + calendar[i])
             if ((calendar[i] == item.WORKDATE)
                && ( item.TYPE == 'h' || item.TYPE == 'H' ||
                     item.TYPE == 'v' || item.TYPE == 'V' ||
                     item.TYPE == 'f' || item.TYPE == 'F' ||
-                    item.TYPE == 'o' || item.TYPE == 'O' ||
-                    item.TYPE == 's' || item.TYPE == 'S')) {
+                    item.TYPE == 's' || item.TYPE == 'S' ||
+                    item.TYPE == 'o' || item.TYPE == 'O')) {
+                var hours = 0;
+                    hours = parseInt(item.WORKHOURS);
                 //所有当天休假记录保留
-                vacRecArray.push(JSON.stringify(item).toUpperCase());
+                //vacRecArray.push(JSON.stringify(item).toUpperCase());
+                //约定1；calendar[42][1]=Holiday Hours
+                if(item.TYPE == 'h' || item.TYPE == 'H'){vacRecArray[1]+= hours;}
+                //约定2；calendar[42][2]=Vacation Hours
+                if(item.TYPE == 'v' || item.TYPE == 'V'){vacRecArray[2]+= hours;}
+                //约定3；calendar[42][3]=Flex leave Hours
+                if(item.TYPE == 'f' || item.TYPE == 'F'){vacRecArray[3]+= hours;}
+                //约定4；calendar[42][4]=Sick leave Hours
+                if(item.TYPE == 's' || item.TYPE == 'S'){vacRecArray[4]+= hours;}
+                //约定5；calendar[42][5]=Other leave Hours
+                if(item.TYPE == 'o' || item.TYPE == 'O'){vacRecArray[5]+= hours;}
+                //约定6；calendar[42][0]=Worktime
+                //worktime = 9 - vacRecArray[1] - vacRecArray[2] - vacRecArray[3] - vacRecArray[4] - vacRecArray[5];
+                //if(worktime < 0){ vacRecArray[0]= 0;console.log('[Warning]' + calendar[i] + '的假期总和超出9小时');}
+                //else{vacRecArray[0]= worktime;}
+
                 //编辑Vacation字符串
                 vacinf = vacinf  + item.TYPE;
-                if (item.WORKHOURS < 8) { vacinf = vacinf + item.WORKHOURS; }
+                if (hours < 8) { vacinf = vacinf + hours; }
             }
         }
         )
         //更新Vacation数组
-        ret[i] = vacRecArray;
+        var vacsum = vacRecArray[0] + vacRecArray[1] + vacRecArray[2] + vacRecArray[3] + vacRecArray[4] + vacRecArray[5]
+        if(vacsum == 0){ret[i]="";}
+        else{ret[i] = vacRecArray;}       
         //console.log('getvacation:' + ret[i])
 
         //HTML 作成

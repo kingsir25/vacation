@@ -149,7 +149,6 @@
   *切换光标
   */
 function changecur(v) {
-  console.log(v);
   var obj = window.document.getElementById("ctid");
   switch (v)
   {
@@ -252,7 +251,7 @@ function changecur(v) {
         <button class="btn btn-warning" type="button" onclick="subvac();">记住我</button>
       </span>
     </div>
-※V:Vacation　F:FlexLeave S: Sick leave O:Other(婚丧产假) 当前页面仅支持每日一种假期类型，如果想休两种请和你的AM申请
+※V:Vacation　F:FlexLeave S: Sick leave O:Other(婚丧产哺) 
 
 </form> 
 
@@ -275,31 +274,204 @@ function changecur(v) {
     var tdobj = window.document.getElementById(id);
 //取得休假类型选择项和填写的小时数
     var vtype =$('#msel-id').val();
-    var hours = window.document.getElementById("input-hours").value;
+    var hours = parseInt(window.document.getElementById("input-hours").value);
     
     var vacinf =  vtype;
-    if (hours <8 ) {vacinf = vacinf + hours;}
+    //if (hours >0 && hours <8  ) {vacinf = vacinf + hours;}
 
-var vacitem = "{\"name\":\""+ getCookie("myeid") +"\",\"team\":\"BOD\", \"workdate\":" + window.calendar[id] + ",\"type\":\""  + vtype + "\",\"workhours\":" + hours + "}";
+//var vacitem = "{\"name\":\""+ getCookie("myeid") +"\",\"team\":\"BOD\", \"workdate\":" + window.calendar[id] + ",\"type\":\""  + vtype + "\",\"workhours\":" + hours + "}";
+var insert_flg = 0;
+//insert_flg:0：删除当前假期;1:直接插入当前假期；3：删除VFSO type的假期后插入当前假期
+var vacRecArray = [0,0,0,0,0,0];
+if(hours==0){
+  //0的场合清空所有假期信息
+  sql = "delete from workschedule where name=\'" + getCookie("myeid") + "\' and workdate = \'" + window.calendar[id] + "\'" 
+          + " and (type =\'V\'  or type =\'v\' or type =\'F\' or type =\'f\'"
+          +     " or type =\'S\' or type =\'s\' or type =\'O\' or type =\'o\')";
+  window.RESTfulAPI.post_insert(sql);
+  window.vacationData[id]=vacRecArray;
+}else{
+
 //保存休假信息到vacation相应地址
      if (window.vacationData[id] == null || window.vacationData[id] == "") {
-         window.vacationData[id]=vacitem;
+       //如果点击日期没有假期信息，则新规创建假期信息进行编辑赋值
+
+                //约定2；calendar[42][2]=Vacation Hours
+                if(vtype == 'V'){vacRecArray[2] = hours;}
+                //约定3；calendar[42][3]=Flex leave Hours
+                if(vtype == 'F'){vacRecArray[3] = hours;}
+                //约定4；calendar[42][4]=Sick leave Hours
+                if(vtype == 'S'){vacRecArray[4] = hours;}
+                //约定5；calendar[42][5]=Other leave Hours
+                if(vtype == 'O'){vacRecArray[5] = hours;}
+         window.vacationData[id]=vacRecArray;
         //ajax更新到DB
          // insert sql
-         sql = "insert into workschedule(name,team,workdate,workhours,type) values(\'" + getCookie("myeid") + "\',\'BOD\',\'" + window.calendar[id] + "\',"+ hours +",\'"+ vtype +"\')"
-         window.RESTfulAPI.post_insert(sql);
+         insert_flg = 1;
      }else{
-       window.vacationData[id]="";
-       vacinf = "";
-       //ajax删除DB数据 delete sql
-       sql = "delete from workschedule where name=\'" + getCookie("myeid") + "\' and workdate = \'" + window.calendar[id] + "\' and type <>\'W\'  and type <>\'H\'  and type <>\'w\'  and type <>\'h\'"
-       window.RESTfulAPI.post_insert(sql);
+         vacsum = parseInt(window.vacationData[id][1]) 
+                + parseInt(window.vacationData[id][2]) 
+                + parseInt(window.vacationData[id][3])
+                + parseInt(window.vacationData[id][4])
+                + parseInt(window.vacationData[id][5]);
+         if (vacsum == 0) {
+         //如果点击日期没有假期信息，则新规创建假期信息进行编辑赋值
+                //约定2；calendar[42][2]=Vacation Hours
+                if(vtype == 'V'){vacRecArray[2] = hours;}
+                //约定3；calendar[42][3]=Flex leave Hours
+                if(vtype == 'F'){vacRecArray[3] = hours;}
+                //约定4；calendar[42][4]=Sick leave Hours
+                if(vtype == 'S'){vacRecArray[4] = hours;}
+                //约定5；calendar[42][5]=Other leave Hours
+                if(vtype == 'O'){vacRecArray[5] = hours;}
+         window.vacationData[id]=vacRecArray;
+        //ajax更新到DB
+         // insert sql
+         insert_flg = 1;
+         }else{
+       //window.vacationData[id]="";
+                //约定2；calendar[42][2]=Vacation Hours
+                if(vtype == 'V'){
+                  vacsum = parseInt(window.vacationData[id][3]) 
+                         + parseInt(window.vacationData[id][4]) 
+                         + parseInt(window.vacationData[id][5]);
+                  //其它type假期总和=0，认为本次点击为清除操作，否则为插入操作
+                  console.log('*V*vacsum=' + vacsum);
+                  if(vacsum==0){window.vacationData[id] = "";insert_flg = 0;}
+                  else{
+                       insert_flg = 1;
+                       vacsum += hours;
+                       if(vacsum > 8){
+                          //如果点击日期所有type类型假期合计>8小时，重置假期信息，插入当前type假期小时数，。
+                         window.vacationData[id][3] = 0;
+                         window.vacationData[id][4] = 0;
+                         window.vacationData[id][5] = 0;
+                         insert_flg = 3;
+                       }
+                       window.vacationData[id][2] = hours;
+                 } 
+                }
+                //约定3；calendar[42][3]=Flex leave Hours
+                if(vtype == 'F'){
+                  vacsum = parseInt(window.vacationData[id][2]) 
+                         + parseInt(window.vacationData[id][4]) 
+                         + parseInt(window.vacationData[id][5]);
+                  //其它type假期总和=0，认为本次点击为清除操作，否则为插入操作
+                  console.log('*F*vacsum=' + vacsum);
+                  if(vacsum==0){window.vacationData[id] = "";insert_flg = 0;}
+                  else{
+                       insert_flg = 1;
+                       vacsum += hours;
+                       if(vacsum > 8){
+                          //如果点击日期所有type类型假期合计>8小时，重置假期信息，插入当前type假期小时数，。
+                         window.vacationData[id][2] = 0;
+                         window.vacationData[id][4] = 0;
+                         window.vacationData[id][5] = 0;
+                         insert_flg = 3;
+                       }
+                       window.vacationData[id][3] = hours;
+                 }
+                }
+                //约定4；calendar[42][4]=Sick leave Hours
+                if(vtype == 'S'){
+                  vacsum = parseInt(window.vacationData[id][2]) 
+                         + parseInt(window.vacationData[id][3]) 
+                         + parseInt(window.vacationData[id][5]);
+                  //其它type假期总和=0，认为本次点击为清除操作，否则为插入操作
+                  console.log('*S*vacsum=' + vacsum);
+                  if(vacsum==0){window.vacationData[id] = "";insert_flg = 0;}
+                  else{
+                       insert_flg = 1;
+                       vacsum += hours;
+                       if(vacsum > 8){
+                          //如果点击日期所有type类型假期合计>8小时，重置假期信息，插入当前type假期小时数，。
+                         window.vacationData[id][2] = 0;
+                         window.vacationData[id][3] = 0;
+                         window.vacationData[id][5] = 0;
+                         insert_flg = 3;
+                       }
+                       window.vacationData[id][4] = hours;
+                 }
+                }
+                //约定5；calendar[42][5]=Other leave Hours
+                if(vtype == 'O'){
+                  vacsum = parseInt(window.vacationData[id][2]) 
+                         + parseInt(window.vacationData[id][3]) 
+                         + parseInt(window.vacationData[id][4]);
+                  //其它type假期总和=0，认为本次点击为清除操作，否则为插入操作
+                  console.log('*O*vacsum=' + vacsum);
+                  if(vacsum==0){window.vacationData[id] = "";insert_flg = 0;}
+                  else{
+                       insert_flg = 1;
+                       vacsum += hours;
+                       if(vacsum > 8){
+                          //如果点击日期所有type类型假期合计>8小时，重置假期信息，插入当前type假期小时数，。
+                         window.vacationData[id][2] = 0;
+                         window.vacationData[id][3] = 0;
+                         window.vacationData[id][4] = 0;
+                         insert_flg = 3;
+                       }
+                       window.vacationData[id][5] = hours;
+                 }
+                }
+       //
+        }
     }
 
-    var html= '<font size=\"3\">' + window.calendar[id].toString().substr(6,2) +'</font> <font size=\"5\" color=\"red\">' + vacinf +'</font>'
+    if(insert_flg == 0){
+           //ajax删除相应type的DB数据 delete sql
+           sql = "delete from workschedule where name=\'" + getCookie("myeid") + "\' and workdate = \'" + window.calendar[id] + "\'" 
+               + " and (type =\'" + vtype.toUpperCase() + "\'  or type =\'" + vtype.toLowerCase() + "\')";
+           window.RESTfulAPI.post_insert(sql);
+     }else if(insert_flg == 3){
+           //ajax删除VFSO type的DB数据 delete sql 然后插入当前type 假期
+           sql = "delete from workschedule where name=\'" + getCookie("myeid") + "\' and workdate = \'" + window.calendar[id] + "\'" 
+               + " and (type =\'V\'  or type =\'v\'  or type =\'F\'  or type =\'f\'  or type =\'S\'  or type =\'s\'   or type =\'O\'  or type =\'o\')";
+           window.RESTfulAPI.post_insert(sql);
 
-    tdobj.innerHTML=html;
-  }
+           sql = "insert into workschedule(name,team,workdate,workhours,type) values(\'" + getCookie("myeid") + "\',\'BOD\',\'" + window.calendar[id] + "\',"+ hours +",\'"+ vtype +"\')";
+           window.RESTfulAPI.post_insert(sql);
+     }else{
+           sql = "insert into workschedule(name,team,workdate,workhours,type) values(\'" + getCookie("myeid") + "\',\'BOD\',\'" + window.calendar[id] + "\',"+ hours +",\'"+ vtype +"\')";
+           window.RESTfulAPI.post_insert(sql);
+    }
+}//非0判断结束
+ vacinf = "";//根据假期信息重新拼接HTML进行显示 不编辑Holiday
+ console.log('window.vacationData[id]:' + window.vacationData[id]);
+    if(window.vacationData[id] !=""){
+        //约定2；calendar[42][2]=Vacation Hours
+        if(window.vacationData[id][2] != 0){ 
+          vacinf += 'V'; 
+          if (parseInt(window.vacationData[id][2]) >0 && parseInt(window.vacationData[id][2]) <8 ) {
+            vacinf += window.vacationData[id][2];
+          } 
+        }
+        //约定3；calendar[42][3]=Flex leave Hours
+        if(window.vacationData[id][3] != 0){ 
+          vacinf += 'F'; 
+          if (parseInt(window.vacationData[id][3]) >0 && parseInt(window.vacationData[id][3]) <8 ) {
+            vacinf += window.vacationData[id][3];
+          } 
+        }
+        //约定4；calendar[42][4]=Sick leave Hours
+        if(window.vacationData[id][4] != 0){ 
+          vacinf += 'S'; 
+          if (parseInt(window.vacationData[id][4]) >0 && parseInt(window.vacationData[id][4]) <8 ) {
+            vacinf += window.vacationData[id][4];
+          } 
+        }
+        //约定5；calendar[42][5]=Other leave Hours
+        if(window.vacationData[id][5] != 0){ 
+          vacinf += 'O'; 
+          if (parseInt(window.vacationData[id][5]) >0 && parseInt(window.vacationData[id][5]) <8 ) {
+            vacinf += window.vacationData[id][5];
+          } 
+        }
+    }
+  var html= '<font size=\"3\">' + window.calendar[id].toString().substr(6,2) +'</font> <font size=\"5\" color=\"red\">' + vacinf +'</font>'
+
+  tdobj.innerHTML=html;
+}
 </script>
 
 </body>    
