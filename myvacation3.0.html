@@ -341,8 +341,9 @@ if(hours==0){
                   else{
                        insert_flg = 1;
                        vacsum += hours;
-                       if(vacsum > 8){
-                          //如果点击日期所有type类型假期合计>8小时，重置假期信息，插入当前type假期小时数，。
+                       if(vacsum > 9){
+                          //9小时 20180314
+                          //如果点击日期所有type类型假期合计>9小时，重置假期信息，插入当前type假期小时数，。
                          window.vacationData[id][3] = 0;
                          window.vacationData[id][4] = 0;
                          window.vacationData[id][5] = 0;
@@ -362,8 +363,9 @@ if(hours==0){
                   else{
                        insert_flg = 1;
                        vacsum += hours;
-                       if(vacsum > 8){
-                          //如果点击日期所有type类型假期合计>8小时，重置假期信息，插入当前type假期小时数，。
+                       if(vacsum > 9){
+                          //9小时 20180314
+                          //如果点击日期所有type类型假期合计>9小时，重置假期信息，插入当前type假期小时数，。
                          window.vacationData[id][2] = 0;
                          window.vacationData[id][4] = 0;
                          window.vacationData[id][5] = 0;
@@ -383,8 +385,9 @@ if(hours==0){
                   else{
                        insert_flg = 1;
                        vacsum += hours;
-                       if(vacsum > 8){
-                          //如果点击日期所有type类型假期合计>8小时，重置假期信息，插入当前type假期小时数，。
+                       if(vacsum > 9){
+                         //9小时 20180314
+                          //如果点击日期所有type类型假期合计>9小时，重置假期信息，插入当前type假期小时数，。
                          window.vacationData[id][2] = 0;
                          window.vacationData[id][3] = 0;
                          window.vacationData[id][5] = 0;
@@ -404,8 +407,9 @@ if(hours==0){
                   else{
                        insert_flg = 1;
                        vacsum += hours;
-                       if(vacsum > 8){
-                          //如果点击日期所有type类型假期合计>8小时，重置假期信息，插入当前type假期小时数，。
+                       if(vacsum > 9){
+                         //9小时 20180314
+                          //如果点击日期所有type类型假期合计>9小时，重置假期信息，插入当前type假期小时数，。
                          window.vacationData[id][2] = 0;
                          window.vacationData[id][3] = 0;
                          window.vacationData[id][4] = 0;
@@ -442,28 +446,28 @@ if(hours==0){
         //约定2；calendar[42][2]=Vacation Hours
         if(window.vacationData[id][2] != 0){ 
           vacinf += 'V'; 
-          if (parseInt(window.vacationData[id][2]) >0 && parseInt(window.vacationData[id][2]) <8 ) {
+          if (parseInt(window.vacationData[id][2]) >0 && parseInt(window.vacationData[id][2]) <9 ) {
             vacinf += window.vacationData[id][2];
           } 
         }
         //约定3；calendar[42][3]=Flex leave Hours
         if(window.vacationData[id][3] != 0){ 
           vacinf += 'F'; 
-          if (parseInt(window.vacationData[id][3]) >0 && parseInt(window.vacationData[id][3]) <8 ) {
+          if (parseInt(window.vacationData[id][3]) >0 && parseInt(window.vacationData[id][3]) <9 ) {
             vacinf += window.vacationData[id][3];
           } 
         }
         //约定4；calendar[42][4]=Sick leave Hours
         if(window.vacationData[id][4] != 0){ 
           vacinf += 'S'; 
-          if (parseInt(window.vacationData[id][4]) >0 && parseInt(window.vacationData[id][4]) <8 ) {
+          if (parseInt(window.vacationData[id][4]) >0 && parseInt(window.vacationData[id][4]) <9 ) {
             vacinf += window.vacationData[id][4];
           } 
         }
         //约定5；calendar[42][5]=Other leave Hours
         if(window.vacationData[id][5] != 0){ 
           vacinf += 'O'; 
-          if (parseInt(window.vacationData[id][5]) >0 && parseInt(window.vacationData[id][5]) <8 ) {
+          if (parseInt(window.vacationData[id][5]) >0 && parseInt(window.vacationData[id][5]) <9 ) {
             vacinf += window.vacationData[id][5];
           } 
         }
