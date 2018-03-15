@@ -46,7 +46,7 @@ function () {
                     item.TYPE == 's' || item.TYPE == 'S' ||
                     item.TYPE == 'o' || item.TYPE == 'O')) {
                 var hours = 0;
-                    hours = parseInt(item.WORKHOURS);
+                    hours = Number(item.WORKHOURS);
                 //所有当天休假记录保留
                 //vacRecArray.push(JSON.stringify(item).toUpperCase());
                 //约定1；calendar[42][1]=Holiday Hours

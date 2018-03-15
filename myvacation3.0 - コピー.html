@@ -122,8 +122,8 @@
     */
     function preMonth() {
         console.log($("#clickdate").val());
-        currentYYYY = Number($("#clickdate").val().substr(0, 4));
-        currentMM = (Number($("#clickdate").val().substr(5, 2)) - 1);
+        currentYYYY = parseInt($("#clickdate").val().substr(0, 4));
+        currentMM = (parseInt($("#clickdate").val().substr(5, 2)) - 1);
         if (currentMM == 0) { currentMM = 12; currentYYYY = currentYYYY - 1 }
         console.log(currentYYYY + "-" + currentMM);
         putMonthDate(currentYYYY, currentMM);
@@ -134,8 +134,8 @@
     */
     function nextMonth() {
         console.log($("#clickdate").val());
-        currentYYYY = Number($("#clickdate").val().substr(0, 4));
-        currentMM = Number($("#clickdate").val().substr(5, 2)) + 1;
+        currentYYYY = parseInt($("#clickdate").val().substr(0, 4));
+        currentMM = parseInt($("#clickdate").val().substr(5, 2)) + 1;
         if (currentMM == 13) { currentMM = 1; currentYYYY = currentYYYY + 1 }
         console.log(currentYYYY + "-" + currentMM);
         putMonthDate(currentYYYY, currentMM);
@@ -274,7 +274,7 @@ function changecur(v) {
     var tdobj = window.document.getElementById(id);
 //取得休假类型选择项和填写的小时数
     var vtype =$('#msel-id').val();
-    var hours = Number(window.document.getElementById("input-hours").value);
+    var hours = parseInt(window.document.getElementById("input-hours").value);
     
     var vacinf =  vtype;
     //if (hours >0 && hours <8  ) {vacinf = vacinf + hours;}
@@ -309,11 +309,11 @@ if(hours==0){
          // insert sql
          insert_flg = 1;
      }else{
-         vacsum = Number(window.vacationData[id][1]) 
-                + Number(window.vacationData[id][2]) 
-                + Number(window.vacationData[id][3])
-                + Number(window.vacationData[id][4])
-                + Number(window.vacationData[id][5]);
+         vacsum = parseInt(window.vacationData[id][1]) 
+                + parseInt(window.vacationData[id][2]) 
+                + parseInt(window.vacationData[id][3])
+                + parseInt(window.vacationData[id][4])
+                + parseInt(window.vacationData[id][5]);
          if (vacsum == 0) {
          //如果点击日期没有假期信息，则新规创建假期信息进行编辑赋值
                 //约定2；calendar[42][2]=Vacation Hours
@@ -332,9 +332,9 @@ if(hours==0){
        //window.vacationData[id]="";
                 //约定2；calendar[42][2]=Vacation Hours
                 if(vtype == 'V'){
-                  vacsum = Number(window.vacationData[id][3]) 
-                         + Number(window.vacationData[id][4]) 
-                         + Number(window.vacationData[id][5]);
+                  vacsum = parseInt(window.vacationData[id][3]) 
+                         + parseInt(window.vacationData[id][4]) 
+                         + parseInt(window.vacationData[id][5]);
                   //其它type假期总和=0，认为本次点击为清除操作，否则为插入操作
                   console.log('*V*vacsum=' + vacsum);
                   if(vacsum==0){window.vacationData[id] = "";insert_flg = 0;}
@@ -354,9 +354,9 @@ if(hours==0){
                 }
                 //约定3；calendar[42][3]=Flex leave Hours
                 if(vtype == 'F'){
-                  vacsum = Number(window.vacationData[id][2]) 
-                         + Number(window.vacationData[id][4]) 
-                         + Number(window.vacationData[id][5]);
+                  vacsum = parseInt(window.vacationData[id][2]) 
+                         + parseInt(window.vacationData[id][4]) 
+                         + parseInt(window.vacationData[id][5]);
                   //其它type假期总和=0，认为本次点击为清除操作，否则为插入操作
                   console.log('*F*vacsum=' + vacsum);
                   if(vacsum==0){window.vacationData[id] = "";insert_flg = 0;}
@@ -376,9 +376,9 @@ if(hours==0){
                 }
                 //约定4；calendar[42][4]=Sick leave Hours
                 if(vtype == 'S'){
-                  vacsum = Number(window.vacationData[id][2]) 
-                         + Number(window.vacationData[id][3]) 
-                         + Number(window.vacationData[id][5]);
+                  vacsum = parseInt(window.vacationData[id][2]) 
+                         + parseInt(window.vacationData[id][3]) 
+                         + parseInt(window.vacationData[id][5]);
                   //其它type假期总和=0，认为本次点击为清除操作，否则为插入操作
                   console.log('*S*vacsum=' + vacsum);
                   if(vacsum==0){window.vacationData[id] = "";insert_flg = 0;}
@@ -398,9 +398,9 @@ if(hours==0){
                 }
                 //约定5；calendar[42][5]=Other leave Hours
                 if(vtype == 'O'){
-                  vacsum = Number(window.vacationData[id][2]) 
-                         + Number(window.vacationData[id][3]) 
-                         + Number(window.vacationData[id][4]);
+                  vacsum = parseInt(window.vacationData[id][2]) 
+                         + parseInt(window.vacationData[id][3]) 
+                         + parseInt(window.vacationData[id][4]);
                   //其它type假期总和=0，认为本次点击为清除操作，否则为插入操作
                   console.log('*O*vacsum=' + vacsum);
                   if(vacsum==0){window.vacationData[id] = "";insert_flg = 0;}
@@ -446,28 +446,28 @@ if(hours==0){
         //约定2；calendar[42][2]=Vacation Hours
         if(window.vacationData[id][2] != 0){ 
           vacinf += 'V'; 
-          if (Number(window.vacationData[id][2]) >0 && Number(window.vacationData[id][2]) <9 ) {
+          if (parseInt(window.vacationData[id][2]) >0 && parseInt(window.vacationData[id][2]) <9 ) {
             vacinf += window.vacationData[id][2];
           } 
         }
         //约定3；calendar[42][3]=Flex leave Hours
         if(window.vacationData[id][3] != 0){ 
           vacinf += 'F'; 
-          if (Number(window.vacationData[id][3]) >0 && Number(window.vacationData[id][3]) <9 ) {
+          if (parseInt(window.vacationData[id][3]) >0 && parseInt(window.vacationData[id][3]) <9 ) {
             vacinf += window.vacationData[id][3];
           } 
         }
         //约定4；calendar[42][4]=Sick leave Hours
         if(window.vacationData[id][4] != 0){ 
           vacinf += 'S'; 
-          if (Number(window.vacationData[id][4]) >0 && Number(window.vacationData[id][4]) <9 ) {
+          if (parseInt(window.vacationData[id][4]) >0 && parseInt(window.vacationData[id][4]) <9 ) {
             vacinf += window.vacationData[id][4];
           } 
         }
         //约定5；calendar[42][5]=Other leave Hours
         if(window.vacationData[id][5] != 0){ 
           vacinf += 'O'; 
-          if (Number(window.vacationData[id][5]) >0 && Number(window.vacationData[id][5]) <9 ) {
+          if (parseInt(window.vacationData[id][5]) >0 && parseInt(window.vacationData[id][5]) <9 ) {
             vacinf += window.vacationData[id][5];
           } 
         }
