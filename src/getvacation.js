@@ -66,8 +66,8 @@ function () {
 
                 //编辑Vacation字符串
                 vacinf = vacinf  + item.TYPE;
-                //【注意】9小时来算
-                if (hours < 9) { vacinf = vacinf + hours; }
+                //【注意】8小时来算
+                if (hours < 8) { vacinf = vacinf + hours; }
             }
         }
         )
