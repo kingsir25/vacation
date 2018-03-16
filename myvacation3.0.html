@@ -122,7 +122,10 @@
             if (i % 7 == 6) { html += '</tr>'; }
         }
         cont.innerHTML = html;
-
+        //mselctvalue = $('#msel-id').val();
+        //console.log("mselctvalue=" + mselctvalue);
+        //if(mselctvalue == "") {mselctvalue = "V";}
+        //changecur(mselctvalue);
         // console.log(html);
     }
     /**
@@ -207,7 +210,7 @@ function changecur(v) {
     <label class ="col-sm-4 control-label" >请假类型:</label>
     <div class="col-sm-8">
       <select class = "form-control" name="month-select" id="msel-id" onchange="changecur(this.options[this.options.selectedIndex].value)"> 
-       <option value="V">Vacation</option>
+       <option value="V"　selected="true">Vacation</option>
        <option value="F">Flexleave</option>
        <option value="S">Sickleave</option>
        <option value="O">Other</option>
