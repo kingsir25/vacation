@@ -24,7 +24,8 @@ function () {
                  +"workdate%20%3E%20=%20" + calendar[0] 
                  +"%20and%20workdate%20%3C=%20" + calendar[calendar.length - 1]
                  +"%20and%20name%20=%27" + id
-                 +"%27%20and%20type%20%3C%3E%20%27w%27";
+                 +"%27%20and%20type%20%3C%3E%20%27w%27"
+                 +"&time=" + new Date();
         console.log("id=" + id + " begindate=" +calendar[0] + " enddate=" +calendar[calendar.length - 1]);
         console.log("url=" + url);
         $.getJSON(url
